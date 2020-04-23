@@ -9,6 +9,7 @@ import { Input, FormBtn } from "../components/Form";
 
 function Books() {
   // Setting our component's initial state
+  const [search, setSearch] = useState([])
   const [books, setBooks] = useState([])
   const [formObject, setFormObject] = useState({})
 
@@ -40,10 +41,21 @@ function Books() {
   };
   function handleSearch(e) {
     e.preventDefault();
-console.log(formObject);
+
     API.searchBooks(formObject)
-    .then( res => {
-      console.log(res.data);
+    .then(({ data }) => {
+     
+     const search =  data.items.map( x => new Object({
+            title: x.volumeInfo.title,
+            author: x.volumeInfo.authors[0],
+            datePublished: x.volumeInfo.publishedDate,
+            description: x.volumeInfo.description,
+            coverImage: x.volumeInfo.imageLinks.thumbnail,
+            ISBN: x.volumeInfo.industryIdentifiers[0].identifier,
+            buyLink: x.saleInfo.buyLink,
+      }),
+      )
+      setSearch(search)
     })
  }
   // When the form is submitted, use the API.saveBook method to save the book data
