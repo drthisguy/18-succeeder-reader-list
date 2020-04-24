@@ -1,16 +1,33 @@
 import React from "react";
+import { Row, Col } from '../Grid'
+import { FormBtn } from '../Form'
 
-// This file exports the Input, TextArea, and FormBtn components
-
-export function Cards(props) {
+export default function Cards({ data }) {
   return (
+    data.map( book => {
+      return(
     <div className="card">
-  <h5 className="card-header">Featured</h5>
-  <div className="card-body">
-    <h5 className="card-title">Special title treatment</h5>
-    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" className="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-  );
+      <h5 className="card-header">{book.title}  ({book.datePublished})</h5>
+        <div className="card-body">
+          <h6 className="card-title">{book.author}</h6>
+          <Row >
+            <Col size={"md-3"}>
+              <img src={book.coverImage} alt={'Book Cover'} />
+            </Col>
+            <Col size={"md-9"}>
+              <p className="card-text">{book.description}</p>
+            </Col>
+          </Row>
+          <FormBtn className="btn btn-info" style={btnStyle}>
+            Save
+            </FormBtn>
+      </div>
+    </div>)
+    })
+  )
+}
+const btnStyle = { 
+  float: "right", 
+  marginBottom: 10,
+  marginTop: 10
 }

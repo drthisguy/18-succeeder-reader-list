@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
+import Cards from "../components/Cards";
 
 function Books() {
   // Setting our component's initial state
@@ -47,8 +48,8 @@ function Books() {
      
      const search =  data.items.map( x => new Object({
             title: x.volumeInfo.title,
-            author: x.volumeInfo.authors[0],
-            datePublished: x.volumeInfo.publishedDate,
+            author: x.volumeInfo.authors.join().replace(',', ', '),
+            datePublished: x.volumeInfo.publishedDate.slice(0, 4),
             description: x.volumeInfo.description,
             coverImage: x.volumeInfo.imageLinks.thumbnail,
             ISBN: x.volumeInfo.industryIdentifiers[0].identifier,
@@ -74,37 +75,47 @@ function Books() {
   };
 
     return (
-      <Container classes={'mt-5'}>
-        <Row classes={'justify-content-center'}>
-            <Jumbotron>
-          <Col size="md-12">
-              <h1>Find new books to add!</h1>
-              <h6>(Powered by Google Books)</h6>
-         
-            <form>
-              <Input
-                onChange={handleInputChange}
-                name="title"
-                placeholder="Title..."
-              />
-              <Input
-                onChange={handleInputChange}
-                name="author"
-                placeholder="Author..."
-              />
-    
-              <FormBtn
-                disabled={!(formObject.author || formObject.title)}
-                onClick={handleSearch}
-              >
-                Search Books
-              </FormBtn>
-            </form>
-          </Col>
-            </Jumbotron>
+      <div>
+        <Container classes={'mt-5'}>
+          <Row classes={'justify-content-center'}>
+              <Jumbotron>
+            <Col size="md-12">
+                <h1>Find new books to read!</h1>
+                <h6>(Powered by Google Books)</h6>
           
-        </Row>
-      </Container>
+              <form>
+                <Input
+                  onChange={handleInputChange}
+                  name="title"
+                  placeholder="Title..."
+                />
+                <Input
+                  onChange={handleInputChange}
+                  name="author"
+                  placeholder="Author..."
+                />
+      
+                <FormBtn
+                  disabled={!(formObject.author || formObject.title)}
+                  onClick={handleSearch}
+                  style={{ float: "right", marginBottom: 10 }} className="btn btn-success"
+                >
+                  Search Books
+                </FormBtn>
+              </form>
+            </Col>
+              </Jumbotron>
+            
+          </Row>
+        </Container>
+        <Container >
+          <Row >
+            <Col size={'md-12'} >
+                <Cards data={search} />
+            </Col>
+          </Row>
+        </Container>
+      </div>
     );
   }
 
