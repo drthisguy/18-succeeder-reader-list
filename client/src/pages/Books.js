@@ -9,37 +9,16 @@ import { Input, FormBtn } from "../components/Form";
 import Cards from "../components/Cards";
 
 function Books() {
-  // Setting our component's initial state
+
   const [search, setSearch] = useState([])
-  const [books, setBooks] = useState([])
   const [formObject, setFormObject] = useState({})
+  const [alert, toggleMessage] = useState({show: false})
 
-  // Load all books and store them with setBooks
-  useEffect(() => {
-    loadBooks()
-  }, [])
-
-  // Loads all books and sets them to books
-  function loadBooks() {
-    API.getBooks()
-      .then(res => 
-        setBooks(res.data)
-      )
-      .catch(err => console.log(err));
-  };
-
-  // Deletes a book from the database with a given id, then reloads books from the db
-  function deleteBook(id) {
-    API.deleteBook(id)
-      .then(res => loadBooks())
-      .catch(err => console.log(err));
-  }
-
-  // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
     const { name, value } = event.target;
     setFormObject({...formObject, [name]: value})
-  };
+  }
+  
   function handleSearch(e) {
     e.preventDefault();
 
@@ -51,6 +30,7 @@ function Books() {
             author: x.volumeInfo.authors.join().replace(',', ', '),
             datePublished: x.volumeInfo.publishedDate.slice(0, 4),
             description: x.volumeInfo.description,
+            details: x.volumeInfo.infoLink,
             coverImage: x.volumeInfo.imageLinks.thumbnail,
             ISBN: x.volumeInfo.industryIdentifiers[0].identifier,
             buyLink: x.saleInfo.buyLink,
@@ -59,20 +39,26 @@ function Books() {
       setSearch(search)
     })
  }
-  // When the form is submitted, use the API.saveBook method to save the book data
-  // Then reload books from the database
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    if (formObject.title || formObject.author) {
-      API.saveBook({
-        title: formObject.title,
-        author: formObject.author,
-        synopsis: formObject.synopsis
-      })
-        .then(res => loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
+  
+  const saveBook = async(e) => {
+    e.preventDefault();
+
+      const { data } = await API.saveBook(search)
+        
+      if (data.status === 'success') {
+        toggleMessage({
+            show: true,
+            color: 'green',
+            msg: 'Book Saved!',
+        })
+    }   else  {
+        toggleMessage({
+            show: true,
+            color: 'red',
+            msg: 'Book failed to save.',
+        })
+    }  
+  }
 
     return (
       <div>
@@ -98,7 +84,7 @@ function Books() {
                 <FormBtn
                   disabled={!(formObject.author || formObject.title)}
                   onClick={handleSearch}
-                  style={{ float: "right", marginBottom: 10 }} className="btn btn-success"
+                  style={{ marginBottom: 10 }} className="btn btn-success"
                 >
                   Search Books
                 </FormBtn>
@@ -111,7 +97,7 @@ function Books() {
         <Container >
           <Row >
             <Col size={'md-12'} >
-                <Cards data={search} />
+                <Cards data={search} save={saveBook} alert={alert} />
             </Col>
           </Row>
         </Container>
