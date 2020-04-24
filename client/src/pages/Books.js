@@ -11,8 +11,9 @@ import Cards from "../components/Cards";
 function Books() {
 
   const [search, setSearch] = useState([])
+  const [saved, addBook] = useState([])
   const [formObject, setFormObject] = useState({})
-  const [alert, toggleMessage] = useState({show: false})
+  const [alert, showAlert] = useState({show: false})
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -26,37 +27,38 @@ function Books() {
     .then(({ data }) => {
      
      const search =  data.items.map( x => new Object({
+            saved: false,
             title: x.volumeInfo.title,
             author: x.volumeInfo.authors.join().replace(',', ', '),
             datePublished: x.volumeInfo.publishedDate.slice(0, 4),
             description: x.volumeInfo.description,
             details: x.volumeInfo.infoLink,
             coverImage: x.volumeInfo.imageLinks.thumbnail,
-            ISBN: x.volumeInfo.industryIdentifiers[0].identifier,
             buyLink: x.saleInfo.buyLink,
+            ISBN: x.volumeInfo.industryIdentifiers[0].identifier,
       }),
       )
       setSearch(search)
     })
  }
-  
-  const saveBook = async(e) => {
-    e.preventDefault();
 
-      const { data } = await API.saveBook(search)
+  const toggleMessage = (msg, color) => {
+      showAlert({
+        show: !alert.show,
+        color,
+        msg
+      })
+   }
+
+  const saveBook = async(index) => {
+      // setSearch({...search, saved: true})
+      addBook(...saved, search[index])
+      const { data } = await API.saveBook(saved)
         
       if (data.status === 'success') {
-        toggleMessage({
-            show: true,
-            color: 'green',
-            msg: 'Book Saved!',
-        })
+        toggleMessage('Book Saved!', 'green')
     }   else  {
-        toggleMessage({
-            show: true,
-            color: 'red',
-            msg: 'Book failed to save.',
-        })
+        toggleMessage('Book failed to save.', 'red')
     }  
   }
 
@@ -97,7 +99,7 @@ function Books() {
         <Container >
           <Row >
             <Col size={'md-12'} >
-                <Cards data={search} save={saveBook} alert={alert} />
+                <Cards data={search} save={saveBook} msg={toggleMessage} alert={alert} />
             </Col>
           </Row>
         </Container>
