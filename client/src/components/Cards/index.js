@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from '../Grid'
 import { FormBtn } from '../Form'
 
-export default function Cards({ data, alert, save, msg }) {
+export default function Cards({ data, alert, save}) {
   return (
     data.map( (book, i) => {
       return(
@@ -20,7 +20,7 @@ export default function Cards({ data, alert, save, msg }) {
           </Row>
           <Row >
             <Col size={'md-12'}>
-          <FormBtn onClick={save.bind(this, i)} onclick={msg.bind(this)} data-index={i} className="btn btn-info" style={saveBtn}>
+          <FormBtn onClick={save.bind(this, i)} data-index={i} className="btn btn-info" style={saveBtn}>
             Save
             </FormBtn>
             <a href={book.details} target={'_blank'}>
@@ -31,8 +31,8 @@ export default function Cards({ data, alert, save, msg }) {
             </Col>
             </Row>
             <Row >
-              <Col size={'md-12'} classes={'text-right'}>
-              {alert.show && <Messenger msg={alert.msg} color={alert.color} />}
+              <Col size={'md-12'} classes={'text-right'}>{book.saved}
+              {book.message.show && <Messenger msg={book.message.msg} color={book.message.color} />}
               </Col>
             </Row>
       </div>
@@ -41,7 +41,10 @@ export default function Cards({ data, alert, save, msg }) {
   )
 }
 
-const Messenger = ({ msg, color }) => <p style={{color: color, marginRight: 15}}>{msg}</p>,
+const Messenger = ({ msg, color }) => {
+console.log(msg);
+return <p style={{color: color, marginRight: 15}}>{msg}</p>
+},
 
  saveBtn = { 
   float: "right", 

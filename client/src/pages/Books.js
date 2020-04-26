@@ -7,7 +7,7 @@ import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
 import Cards from "../components/Cards";
-
+let books;
 function Books() {
 
   const [search, setSearch] = useState([])
@@ -26,8 +26,7 @@ function Books() {
     API.searchBooks(formObject)
     .then(({ data }) => {
      
-     const search =  data.items.map( x => new Object({
-            saved: false,
+      books =  data.items.map( x => new Object({
             title: x.volumeInfo.title,
             author: x.volumeInfo.authors.join().replace(',', ', '),
             datePublished: x.volumeInfo.publishedDate.slice(0, 4),
@@ -36,9 +35,14 @@ function Books() {
             coverImage: x.volumeInfo.imageLinks.thumbnail,
             buyLink: x.saleInfo.buyLink,
             ISBN: x.volumeInfo.industryIdentifiers[0].identifier,
+            message: {
+              show: false,
+              msg: '',
+              color: ''
+            }
       }),
       )
-      setSearch(search)
+      setSearch(books)
     })
  }
 
@@ -51,14 +55,20 @@ function Books() {
    }
 
   const saveBook = async(index) => {
-      // setSearch({...search, saved: true})
-      addBook(...saved, search[index])
+      console.log(books)
+      addBook([...saved, search[index]])
       const { data } = await API.saveBook(saved)
         
       if (data.status === 'success') {
-        toggleMessage('Book Saved!', 'green')
-    }   else  {
-        toggleMessage('Book failed to save.', 'red')
+        books[index].message.show = true;
+        books[index].message.msg = 'Book Save!';
+        books[index].message.color = 'green';
+        setSearch(books)
+      } else  {
+        books[index].message.show = true;
+        books[index].message.msg = 'Book failed to save!';
+        books[index].message.color = 'red';
+        setSearch(books)
     }  
   }
 
