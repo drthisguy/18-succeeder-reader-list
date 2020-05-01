@@ -2,8 +2,8 @@ import React from "react";
 import { Row, Col } from '../Grid'
 import { FormBtn } from '../Form'
 
-export default function SavedBooks({ data, remove}) {
-    console.log(data)
+export default function SavedBooks({ data, remove, alert}) {
+ 
   return (
     data.map( book => {
       return(
@@ -42,10 +42,8 @@ export default function SavedBooks({ data, remove}) {
   )
 }
 
-const Messenger = ({ msg, color }) => {
-console.log(msg);
-return <p style={{color: color, marginRight: 15}}>{msg}</p>
-},
+const Messenger = ({ msg, color }) => <p style={{color: color, marginRight: 15}}>{msg}</p>
+,
 
  delBtn = { 
   float: "right", 

@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import DeleteBtn from "../components/DeleteBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
 import Cards from "../components/Cards";
 let books;
@@ -54,7 +51,12 @@ function Books() {
 
     addBook([...saved, search[index]])
    
-      const { data } = await API.saveBook(search[index])
+      const res = await API.saveBook(search[index])
+      if (res.status === 200) {
+      window.alert(`${search[index].title} saved successfully!`)
+      } else {
+        window.alert(`${search[index].title} failed to save.`)
+      }
   }
 
     return (
