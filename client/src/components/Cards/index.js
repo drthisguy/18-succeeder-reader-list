@@ -6,7 +6,7 @@ export default function Cards({ data, alert, save}) {
   return (
     data.map( (book, i) => {
       return(
-    <div key={book.ISBN} className="card">
+    <div key={i} className="card">
       <h4 className="card-header">{book.title}  ({book.datePublished})</h4>
         <div className="card-body">
           <h5 className="card-title mb-2">{book.author}</h5>

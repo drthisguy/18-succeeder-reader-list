@@ -28,13 +28,13 @@ function Books() {
      
       books =  data.items.map( x => new Object({
             title: x.volumeInfo.title,
-            author: x.volumeInfo.authors.join().replace(',', ', '),
-            datePublished: x.volumeInfo.publishedDate.slice(0, 4),
+            author: x.volumeInfo.authors ? x.volumeInfo.authors.join().replace(',', ', ') : 'Unlisted',
+            datePublished: x.volumeInfo.publishedDate ? x.volumeInfo.publishedDate.slice(0, 4) : 'Year Unlisted',
             description: x.volumeInfo.description,
-            details: x.volumeInfo.infoLink,
-            coverImage: x.volumeInfo.imageLinks.thumbnail,
-            buyLink: x.saleInfo.buyLink,
-            ISBN: x.volumeInfo.industryIdentifiers[0].identifier,
+            details: x.volumeInfo.infoLink, 
+            coverImage: x.volumeInfo.imageLinks.thumbnail ? x.volumeInfo.imageLinks.thumbnail : 'https://bitsofco.de/content/images/2018/12/broken-1.png',
+            buyLink: x.saleInfo.buyLink ? x.saleInfo.buyLink : '' ,
+            ISBN: x.volumeInfo.industryIdentifiers ? x.volumeInfo.industryIdentifiers[0].identifier : 'ISBN unlisted'
 
       }),
       )

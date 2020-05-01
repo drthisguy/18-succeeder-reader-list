@@ -6,37 +6,30 @@ import SavedBooks from "../components/SavedBooks";
 import API from "../utils/API";
 
 function Saved () {
-  const [books, setBooks] = useState([])
+  const [books, setBooks] = useState([]),
 
-  // When this component mounts, grab the book with the _id of props.match.params.id
-  // e.g. localhost:3000/books/599dcb67f0f16317844583fc
-  const {id} = useParams()
-  useEffect(() => {
-    API.getBook(id)
-      .then(res => setBooks(res.data))
-      .catch(err => console.log(err));
-  }, [])
+    { id } = useParams();
 
     // Load all books and store them with setBooks
     useEffect(() => {
       loadBooks()
-    }, [])
+    }, [deleteBook])
   
     // Loads all books and sets them to books
-    function loadBooks() {
+    const  loadBooks = () => {
       API.getBooks()
         .then(res => 
-          setBooks(...books, res.data)
+          setBooks(res.data)
         )
-        .catch(err => console.log(err));
-    };
+        .catch(err => console.log(err))
+      },
   
     // Deletes a book from the database with a given id, then reloads books from the db
-    function deleteBook(id) {
-      API.deleteBook(id)
+      deleteBook = _id => { 
+      API.deleteBook(_id)
         .then(res => loadBooks())
         .catch(err => console.log(err));
-    }
+      }
 
     
   return (

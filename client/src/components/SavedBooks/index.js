@@ -2,12 +2,12 @@ import React from "react";
 import { Row, Col } from '../Grid'
 import { FormBtn } from '../Form'
 
-export default function Cards({ data, alert, remove}) {
+export default function SavedBooks({ data, remove}) {
     console.log(data)
   return (
-    data.map( (book, i) => {
+    data.map( book => {
       return(
-    <div key={book.ISBN} className="card">
+    <div key={book._id} className="card">
       <h4 className="card-header">{book.title}  ({book.datePublished})</h4>
         <div className="card-body">
           <h5 className="card-title mb-2">{book.author}</h5>
@@ -21,11 +21,11 @@ export default function Cards({ data, alert, remove}) {
           </Row>
           <Row >
             <Col size={'md-12'}>
-          <FormBtn onClick={remove.bind(this, i)} data-index={i} className="btn btn-info" style={saveBtn}>
-            Save
+          <FormBtn onClick={remove.bind(this, book._id)} className="btn btn-primary" style={delBtn}>
+            Delete
             </FormBtn>
             <a href={book.details} target={'_blank'}>
-          <FormBtn className="btn btn-primary" style={detsBtn}>
+          <FormBtn className="btn btn-success" style={detsBtn}>
             Details
             </FormBtn>
             </a>
@@ -47,7 +47,7 @@ console.log(msg);
 return <p style={{color: color, marginRight: 15}}>{msg}</p>
 },
 
- saveBtn = { 
+ delBtn = { 
   float: "right", 
   margin: 20,
   width: 120
