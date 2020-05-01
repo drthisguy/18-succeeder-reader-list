@@ -3,9 +3,9 @@ Search and save utility for the google books API.
 [Company Directory](https://succeeder-reader.herokuapp.com/)
 
 
-# 16-React-Profile
+# 16-The Reader Succeeder
 
-Developer Profile
+Reading list powered by google books
 
 ## Table of contents
 * [General info](#general-info)
@@ -47,7 +47,11 @@ ___
 ___
 
 ## Screens:
-![image](https://user-images.githubusercontent.com/48693333/79709066-3509f280-828f-11ea-9ea9-1cb90186fd31.png)
+![image](https://user-images.githubusercontent.com/48693333/80837492-ddd81c00-8bc4-11ea-974a-f92b8f9a0820.png)
+
+
+![image](https://user-images.githubusercontent.com/48693333/80837580-14ae3200-8bc5-11ea-8548-a7587317b039.png)
+
 ___
 
 ## Sources
