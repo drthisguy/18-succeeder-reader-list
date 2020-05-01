@@ -9,7 +9,7 @@ function Saved () {
 
     useEffect(() => {
       loadBooks()
-    }, [deleteBook])
+    }, [])
   
     const  loadBooks = () => {
       API.getBooks()

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
@@ -7,23 +7,23 @@ import Cards from "../components/Cards";
 let books;
 function Books() {
 
-  const [search, setSearch] = useState([])
-  const [saved, addBook] = useState([])
-  const [formObject, setFormObject] = useState({})
-  const [alert, showAlert] = useState({show: false})
+  const [search, setSearch] = useState([]),
+   [saved, addBook] = useState([]),
+   [formObject, setFormObject] = useState({}),
+   [alert, showAlert] = useState({show: false}),
 
-  function handleInputChange(event) {
+   handleInputChange = event => {
     const { name, value } = event.target;
     setFormObject({...formObject, [name]: value})
-  }
+  },
   
-  function handleSearch(e) {
+   handleSearch = e => {
     e.preventDefault();
 
     API.searchBooks(formObject)
     .then(({ data }) => {
      
-      books =  data.items.map( x => new Object({
+      books =  data.items.map( x => x = {
             title: x.volumeInfo.title,
             author: x.volumeInfo.authors ? x.volumeInfo.authors.join().replace(',', ', ') : 'Unlisted',
             datePublished: x.volumeInfo.publishedDate ? x.volumeInfo.publishedDate.slice(0, 4) : 'Year Unlisted',
@@ -33,21 +33,21 @@ function Books() {
             buyLink: x.saleInfo.buyLink ? x.saleInfo.buyLink : '' ,
             ISBN: x.volumeInfo.industryIdentifiers ? x.volumeInfo.industryIdentifiers[0].identifier : 'ISBN unlisted'
 
-      }),
+      },
       )
       setSearch(books)
     })
- }
+ },
 
-  const toggleMessage = (msg, color) => {
+   toggleMessage = (msg, color) => {
       showAlert({
         show: !alert.show,
         color,
         msg
       })
-   }
+   },
 
-  const saveBook = async(index) => {
+   saveBook = async(index) => {
 
     addBook([...saved, search[index]])
    
@@ -57,7 +57,7 @@ function Books() {
       } else {
         window.alert(`${search[index].title} failed to save.`)
       }
-  }
+  };
 
     return (
       <div>
