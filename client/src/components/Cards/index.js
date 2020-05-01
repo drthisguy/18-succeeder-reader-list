@@ -32,7 +32,7 @@ export default function Cards({ data, alert, save}) {
             </Row>
             <Row >
               <Col size={'md-12'} classes={'text-right'}>{book.saved}
-              {book.message.show && <Messenger msg={book.message.msg} color={book.message.color} />}
+              {alert.show && <Messenger msg={alert.msg} color={alert.color} />}
               </Col>
             </Row>
       </div>

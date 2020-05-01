@@ -25,7 +25,7 @@ function Saved (props) {
     function loadBooks() {
       API.getBooks()
         .then(res => 
-          setBooks(res.data)
+          setBook(res.data)
         )
         .catch(err => console.log(err));
     };

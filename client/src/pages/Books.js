@@ -35,11 +35,7 @@ function Books() {
             coverImage: x.volumeInfo.imageLinks.thumbnail,
             buyLink: x.saleInfo.buyLink,
             ISBN: x.volumeInfo.industryIdentifiers[0].identifier,
-            message: {
-              show: false,
-              msg: '',
-              color: ''
-            }
+
       }),
       )
       setSearch(books)
@@ -55,21 +51,11 @@ function Books() {
    }
 
   const saveBook = async(index) => {
-      console.log(books)
-      addBook([...saved, search[index]])
-      const { data } = await API.saveBook(saved)
+    addBook([...saved, search[index]])
+    console.log(saved, index)
+      const { data } = await API.saveBook(search[index])
         
-      if (data.status === 'success') {
-        books[index].message.show = true;
-        books[index].message.msg = 'Book Save!';
-        books[index].message.color = 'green';
-        setSearch(books)
-      } else  {
-        books[index].message.show = true;
-        books[index].message.msg = 'Book failed to save!';
-        books[index].message.color = 'red';
-        setSearch(books)
-    }  
+      console.log(data)
   }
 
     return (
