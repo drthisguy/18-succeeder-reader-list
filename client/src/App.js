@@ -15,11 +15,8 @@ function App() {
             <Books />
           </Route>
           <Route exact path="/saved">
-            {/* <Saved /> */}
+            <Saved />
           </Route>
-          {/* <Route exact path="/books/:id">
-            <Detail />
-          </Route> */}
           <Route>
             <NoMatch />
           </Route>

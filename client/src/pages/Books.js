@@ -51,11 +51,10 @@ function Books() {
    }
 
   const saveBook = async(index) => {
+
     addBook([...saved, search[index]])
-    console.log(saved, index)
+   
       const { data } = await API.saveBook(search[index])
-        
-      console.log(data)
   }
 
     return (
