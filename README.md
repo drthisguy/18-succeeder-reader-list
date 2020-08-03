@@ -1,6 +1,6 @@
 # google-books-tool
-Search and save utility for the google books API.
-[Company Directory](https://succeeder-reader.herokuapp.com/)
+Search and save utility for the google books API.  
+[Succeeder-Reader](https://succeeder-reader.herokuapp.com/)
 
 
 # 16-The Reader Succeeder
@@ -25,7 +25,7 @@ ___
 
 ## Technologies
 * ReactJS
-* React-router-dom
+* MongoDB
 * axios
 * express
 
